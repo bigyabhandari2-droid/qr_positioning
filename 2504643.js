@@ -56,7 +56,7 @@ function showMarkerAt(top, left) {
 function showProduct(data) {
     const obj = JSON.parse(data);
 
-    document.getElementById("name").textContent = "Name: " + obj.name;
-    document.getElementById("stock").textContent = "In store: " + obj.in_store;
-    document.getElementById("price").textContent = "Price: €" + obj.price;
+    document.getElementById("name").textContent = "Name: " + (obj.name || "Yes");
+    document.getElementById("stock").textContent = "In store: " + (obj.in_store !== undefined ? obj.in_store : "No");
+    document.getElementById("price").textContent = "Price: €" + (obj.price !== undefined ? obj.price : "No");
 }
