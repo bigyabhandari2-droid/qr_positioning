@@ -18,11 +18,21 @@ function startScanner() {
     reader.start(
         { facingMode: "environment" },
         {},
-        function (text) {
-            const place = JSON.parse(text);
-            showMarkerAt(place.top, place.left);
-            toggleScanner();
-        }
+       function (text) {
+    const data = JSON.parse(text);
+
+    // Old functionality (map)
+    if (data.top && data.left) {
+        showMarkerAt(data.top, data.left);
+    }
+
+    // New functionality (inventory)
+    if (data.name) {
+        showProduct(text);
+    }
+
+    toggleScanner();
+}
     ).catch(function (err) {
         console.error(err);
     });
@@ -35,4 +45,11 @@ function stopScanner() {
 function showMarkerAt(top, left) {
     marker.style.top = top;
     marker.style.left = left;
+}
+function showProduct(data) {
+    const obj = JSON.parse(data);
+
+    document.getElementById("name").textContent = "Name: " + obj.name;
+    document.getElementById("stock").textContent = "In store: " + obj.in_store;
+    document.getElementById("price").textContent = "Price: €" + obj.price;
 }
